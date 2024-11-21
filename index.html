@@ -1,70 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PaolaPizza</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="app.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paola Pizza</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>¡Bienvenido a PaolaPizza!</h1>
-  </header>
-  
-  <main>
+    <header>
+        <h1>¡Bienvenido a Paola Pizza!</h1>
+    </header>
+
+    <!-- Sección elegir tamaño de pizza -->
     <section class="choose-size">
-      <h2>Elige el tamaño de tu pizza</h2>
-      <div class="pizza-sizes">
-        <div class="pizza-option" onclick="selectSize('small')">
-          <img src="images/pizza-small.png" alt="Pizza pequeña">
-          <p>Pequeña - $10,000</p>
+        <h2>Elige el tamaño de tu pizza</h2>
+        <div class="pizza-options">
+            <div class="pizza-option" onclick="selectSize('pequeña')">
+                <img src="images/pizza-small.png" alt="Pizza pequeña" class="pizza">
+                <p>Pequeña - $10.000</p>
+            </div>
+            <div class="pizza-option" onclick="selectSize('mediana')">
+                <img src="images/pizza-medium.png" alt="Pizza mediana" class="pizza">
+                <p>Mediana - $12.000</p>
+            </div>
+            <div class="pizza-option" onclick="selectSize('grande')">
+                <img src="images/pizza-large.png" alt="Pizza grande" class="pizza">
+                <p>Grande - $14.000</p>
+            </div>
         </div>
-        <div class="pizza-option" onclick="selectSize('medium')">
-          <img src="images/pizza-medium.png" alt="Pizza mediana">
-          <p>Mediana - $12,000</p>
-        </div>
-        <div class="pizza-option" onclick="selectSize('large')">
-          <img src="images/pizza-large.png" alt="Pizza grande">
-          <p>Grande - $14,000</p>
-        </div>
-      </div>
     </section>
 
-    <section class="selected-pizza hidden">
-      <h2>Tu pizza seleccionada</h2>
-      <div id="selected-pizza-display"></div>
-    </section>
-
+    <!-- Sección de ingredientes -->
     <section class="choose-toppings hidden">
-      <h2>Elige hasta 3 ingredientes</h2>
-      <div class="toppings-list">
-        <!-- Aquí se generarán los ingredientes dinámicamente desde app.js -->
-      </div>
-      <button onclick="proceedToCart()">Agregar al carrito</button>
+        <h2>Elige hasta 3 ingredientes</h2>
+        <div class="toppings-list"></div>
+        <button onclick="addToCart()">Agregar al carrito</button>
     </section>
 
+    <!-- Carrito de compras -->
     <section class="cart hidden">
-      <h2>Carrito de compras</h2>
-      <div id="cart-details"></div>
-      <form id="customer-info">
-        <label for="name">Nombre completo:</label>
-        <input type="text" id="name" required>
-        <label for="rut">RUT:</label>
-        <input type="text" id="rut" required>
-        <label for="phone">Teléfono:</label>
-        <input type="tel" id="phone" required>
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" required>
-        <label for="address">Dirección:</label>
-        <input type="text" id="address" required>
-        <button type="submit">Realizar Pedido</button>
-      </form>
+        <h2>Tu carrito</h2>
+        <ul id="cart-items"></ul>
+        <button onclick="checkout()">Confirmar pedido</button>
     </section>
-  </main>
 
-  <footer>
-    <p>PaolaPizza &copy; 2024</p>
-  </footer>
+    <!-- Formulario de pago -->
+    <section class="checkout hidden">
+        <h2>Confirma tu pedido</h2>
+        <form id="customer-info">
+            <label for="name">Nombre completo:</label>
+            <input type="text" id="name" required>
+            <label for="rut">RUT:</label>
+            <input type="text" id="rut" required>
+            <label for="phone">Número celular:</label>
+            <input type="text" id="phone" required>
+            <label for="email">Correo electrónico:</label>
+            <input type="email" id="email" required>
+            <label for="address">Dirección de retiro:</label>
+            <input type="text" id="address" required>
+            <button type="submit">Confirmar y pagar</button>
+        </form>
+    </section>
+
+    <script src="app.js"></script>
 </body>
 </html>

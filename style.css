@@ -1,101 +1,84 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
-    color: #333;
 }
 
 header {
-    background-color: #8DB4E2;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
-
-main {
+    background-color: #f8b400;
     padding: 20px;
+    text-align: center;
+    color: white;
 }
 
 h1, h2 {
-    margin-bottom: 20px;
+    font-size: 1.8em;
 }
 
-#pizza-selection {
+section {
+    margin: 20px;
+}
+
+/* Sección de elección de tamaño */
+.pizza-options {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.pizza-option {
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.pizza-option:hover {
-    transform: scale(1.1);
+    justify-content: space-around;
 }
 
 .pizza-option img {
     width: 150px;
-    height: auto;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    transition: border 0.3s ease;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
 }
 
-.pizza-option:hover img {
-    border: 2px solid #8DB4E2;
-}
-
-#chosen-pizza {
-    display: none;
+.pizza-option p {
     text-align: center;
-    margin-bottom: 20px;
+}
+
+.pizza-option.selected img {
+    transform: scale(1.2);
     position: relative;
+    z-index: 1;
 }
 
-#chosen-pizza img {
-    width: 200px;
-    height: auto;
-    animation: popIn 0.5s ease;
+/* Sección de ingredientes */
+.hidden {
+    display: none;
 }
 
-@keyframes popIn {
-    0% {
-        transform: scale(0.8) translateY(-50px);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-}
-
-#ingredients-list {
+.toppings-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
 }
 
+.topping {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.topping input {
+    margin-right: 10px;
+}
+
 button {
-    background-color: #8DB4E2;
+    background-color: #f8b400;
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 10px 15px;
     cursor: pointer;
-    margin-top: 10px;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: #6a9fd1;
+    background-color: #e0a700;
 }
 
-#cart {
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #fff;
+/* Animaciones */
+.selected img {
+    transform: scale(1.3) translateY(-20px);
 }

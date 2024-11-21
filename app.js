@@ -1,94 +1,84 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const pizzaOptions = document.querySelectorAll(".pizza-option");
-    const chosenPizzaDiv = document.getElementById("chosen-pizza");
-    const ingredientsList = document.getElementById("ingredients-list");
-    const cart = document.getElementById("cart");
-    const addToCartButton = document.getElementById("add-to-cart");
-    const checkoutButton = document.getElementById("checkout");
+// Definir los ingredientes y precios
+const toppings = [
+    { name: 'Champiñón', price: 500 },
+    { name: 'Carne', price: 2500 },
+    { name: 'Maíz', price: 400 },
+    { name: 'Pechuga de pollo', price: 1000 },
+    { name: 'Jamon', price: 1200 },
+    { name: 'Olivas', price: 800 },
+    { name: 'Cebolla', price: 600 },
+    { name: 'Pimientos', price: 700 },
+    { name: 'Tomate', price: 400 },
+    { name: 'Bacon', price: 2000 },
+    { name: 'Queso extra', price: 1500 },
+    { name: 'Piña', price: 900 },
+    { name: 'Atún', price: 1800 },
+    { name: 'Salchichón', price: 1300 },
+    { name: 'Salsa barbacoa', price: 700 },
+    { name: 'Salsa picante', price: 600 },
+    { name: 'Albahaca', price: 400 },
+    { name: 'Pepperoni', price: 2500 },
+    { name: 'Anchoas', price: 2300 },
+    { name: 'Huevo', price: 800 }
+];
 
-    let selectedPizza = null;
+let selectedSize = '';
+let selectedToppings = [];
 
-    // Ingredientes
-    const ingredients = [
-        { name: "Champiñón", price: 500 },
-        { name: "Carne", price: 2500 },
-        { name: "Maíz", price: 400 },
-        { name: "Pepperoni", price: 1000 },
-        { name: "Pollo", price: 1500 },
-        { name: "Aceitunas", price: 800 },
-        { name: "Queso extra", price: 1200 },
-        { name: "Piña", price: 700 },
-        { name: "Tocino", price: 2000 }
-    ];
+// Función para seleccionar tamaño de pizza
+function selectSize(size) {
+    selectedSize = size;
+    document.querySelectorAll('.pizza-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    document.querySelector(`.pizza-option img[alt="Pizza ${size}"]`).parentElement.classList.add('selected');
+    document.querySelector('.choose-toppings').classList.remove('hidden');
+}
 
-    // Render ingredients list
-    ingredients.forEach((ingredient, index) => {
-        const ingredientDiv = document.createElement("div");
-        ingredientDiv.innerHTML = `
-            <input type="checkbox" id="ingredient-${index}" value="${ingredient.price}">
-            <label for="ingredient-${index}">${ingredient.name} - $${ingredient.price}</label>
+// Función para cargar los ingredientes
+function loadToppings() {
+    const toppingsContainer = document.querySelector('.toppings-list');
+    toppings.forEach(topping => {
+        const toppingElement = document.createElement('div');
+        toppingElement.classList.add('topping');
+        toppingElement.innerHTML = `
+            <input type="checkbox" id="topping-${topping.name}" value="${topping.price}">
+            <label for="topping-${topping.name}">${topping.name} - $${topping.price}</label>
         `;
-        ingredientsList.appendChild(ingredientDiv);
+        toppingsContainer.appendChild(toppingElement);
+    });
+}
+
+// Función para agregar al carrito
+function addToCart() {
+    const cartItems = document.getElementById('cart-items');
+    let total = 0;
+    selectedToppings = [];
+    document.querySelectorAll('.toppings-list input:checked').forEach(input => {
+        selectedToppings.push(input.value);
+        total += parseInt(input.value);
     });
 
-    // Handle pizza selection
-    pizzaOptions.forEach(option => {
-        option.addEventListener("click", () => {
-            const price = option.dataset.price;
-            const size = option.dataset.size;
-            const imgSrc = option.querySelector("img").src;
+    const sizePrice = { 'pequeña': 10000, 'mediana': 12000, 'grande': 14000 };
+    total += sizePrice[selectedSize];
 
-            selectedPizza = { price, size };
+    const cartHTML = `
+        <li>${selectedSize} pizza - $${sizePrice[selectedSize]}</li>
+        <li>Ingredientes: ${selectedToppings.map(price => `$${price}`).join(', ')}</li>
+        <li>Total: $${total}</li>
+    `;
+    cartItems.innerHTML = cartHTML;
+    document.querySelector('.cart').classList.remove('hidden');
+}
 
-            chosenPizzaDiv.innerHTML = `
-                <img src="${imgSrc}" alt="${size} pizza">
-                <h3>${size} - $${price}</h3>
-            `;
-            chosenPizzaDiv.style.display = "block";
-        });
+// Función para proceder al pago
+function checkout() {
+    const form = document.getElementById('customer-info');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        alert('¡Gracias por tu compra! Tu pizza estará lista para retirar en 30 minutos en el local.');
     });
+}
 
-    // Add to cart logic
-    addToCartButton.addEventListener("click", () => {
-        if (!selectedPizza) {
-            alert("Por favor selecciona un tamaño de pizza.");
-            return;
-        }
-
-        const selectedIngredients = Array.from(
-            ingredientsList.querySelectorAll("input:checked")
-        );
-
-        if (selectedIngredients.length > 3) {
-            alert("Solo puedes seleccionar hasta 3 ingredientes.");
-            return;
-        }
-
-        let total = parseInt(selectedPizza.price);
-        const selectedItems = selectedIngredients.map(input => {
-            const ingredient = ingredients[parseInt(input.id.split("-")[1])];
-            total += ingredient.price;
-            return ingredient.name;
-        });
-
-        cart.innerHTML = `
-            <p>Tamaño: ${selectedPizza.size} - $${selectedPizza.price}</p>
-            <p>Ingredientes: ${selectedItems.join(", ")}</p>
-            <p>Total: $${total}</p>
-        `;
-    });
-
-    // Checkout logic
-    checkoutButton.addEventListener("click", () => {
-        const name = prompt("Ingresa tu nombre completo:");
-        const address = prompt("Ingresa tu dirección:");
-
-        if (!name || !address) {
-            alert("Todos los campos son obligatorios.");
-            return;
-        }
-
-        alert(`Gracias por tu pedido, ${name}. 
-Tu pizza estará lista en 30 minutos. La enviaremos a ${address}.`);
-    });
-});
+// Cargar los ingredientes al cargar la página
+document.addEventListener('DOMContentLoaded', loadToppings);
