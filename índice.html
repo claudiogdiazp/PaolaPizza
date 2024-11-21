@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaolaPizza</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<!-- Sección de selección de tamaño de pizza -->
+<div class="seleccion-pizza">
+    <img src="imagenes/pizza-pequeña.png" class="pizza" id="pizzaPequena" alt="Pizza Pequeña">
+    <img src="imagenes/pizza-mediana.png" class="pizza" id="pizzaMediana" alt="Pizza Mediana">
+    <img src="imagenes/pizza-grande.png" class="pizza" id="pizzaGrande" alt="Pizza Grande">
+</div>
+
+<!-- Sección de selección de ingredientes -->
+<div class="seleccion-ingredientes">
+    <h2>Elige tus ingredientes</h2>
+    <div class="ingrediente" id="ingrediente1">Champiñones - $500</div>
+    <div class="ingrediente" id="ingrediente2">Carne - $2500</div>
+    <div class="ingrediente" id="ingrediente3">Maíz - $400</div>
+    <!-- Agrega más ingredientes aquí -->
+</div>
+
+<!-- Carrito -->
+<div id="carrito">
+    <h2>Carrito</h2>
+    <div id="articulosCarrito"></div>
+    <button id="realizarPedido">Realizar Pedido</button>
+</div>
+
+<script src="aplicacion.js"></script>
+</body>
+</html>
