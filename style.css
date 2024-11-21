@@ -1,32 +1,52 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
-h1, h2 {
-    color: #333;
+.container {
+    width: 50%;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-select, button {
-    margin: 10px;
-    padding: 10px;
-    font-size: 16px;
+h1 {
+    text-align: center;
 }
 
-#carrito {
-    margin-top: 20px;
+.size-selection, .ingredients {
+    margin-bottom: 20px;
 }
 
-#realizarPedido {
+button {
+    padding: 10px 15px;
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-#realizarPedido:hover {
+button:hover {
     background-color: #45a049;
+}
+
+#cart {
+    margin-top: 30px;
+}
+
+#checkout-form {
+    margin-top: 30px;
+    background-color: #e7e7e7;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#checkout-form input, #checkout-form select {
+    padding: 5px;
+    margin-bottom: 10px;
 }
