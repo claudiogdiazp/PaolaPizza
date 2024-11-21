@@ -1,66 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PaolaPizza</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PaolaPizza</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
 </head>
 <body>
-    <header>
-        <h1>¡Bienvenido a PaolaPizza!</h1>
-        <p>Elige tu pizza favorita y personalízala a tu gusto.</p>
-    </header>
-    <main>
-        <section id="pizza-selection">
-            <h2>Elige el tamaño de tu pizza:</h2>
-            <div class="pizza-options">
-                <div class="pizza-option" data-price="10000" data-size="Pequeña">
-                    <img src="images/pizza-small.png" alt="Pizza pequeña">
-                    <p>Pequeña - $10,000</p>
-                </div>
-                <div class="pizza-option" data-price="12000" data-size="Mediana">
-                    <img src="images/pizza-medium.png" alt="Pizza mediana">
-                    <p>Mediana - $12,000</p>
-                </div>
-                <div class="pizza-option" data-price="14000" data-size="Grande">
-                    <img src="images/pizza-large.png" alt="Pizza grande">
-                    <p>Grande - $14,000</p>
-                </div>
-            </div>
-        </section>
+  <header>
+    <h1>¡Bienvenido a PaolaPizza!</h1>
+  </header>
+  
+  <main>
+    <section class="choose-size">
+      <h2>Elige el tamaño de tu pizza</h2>
+      <div class="pizza-sizes">
+        <div class="pizza-option" onclick="selectSize('small')">
+          <img src="images/pizza-small.png" alt="Pizza pequeña">
+          <p>Pequeña - $10,000</p>
+        </div>
+        <div class="pizza-option" onclick="selectSize('medium')">
+          <img src="images/pizza-medium.png" alt="Pizza mediana">
+          <p>Mediana - $12,000</p>
+        </div>
+        <div class="pizza-option" onclick="selectSize('large')">
+          <img src="images/pizza-large.png" alt="Pizza grande">
+          <p>Grande - $14,000</p>
+        </div>
+      </div>
+    </section>
 
-        <section id="ingredient-selection" class="hidden">
-            <h2>Personaliza tu pizza:</h2>
-            <p>Elige hasta 3 ingredientes adicionales:</p>
-            <div class="ingredients">
-                <!-- Lista de ingredientes generada dinámicamente -->
-            </div>
-            <button id="add-to-cart">Agregar al carrito</button>
-        </section>
+    <section class="selected-pizza hidden">
+      <h2>Tu pizza seleccionada</h2>
+      <div id="selected-pizza-display"></div>
+    </section>
 
-        <section id="cart" class="hidden">
-            <h2>Carrito de compras</h2>
-            <div id="cart-summary"></div>
-            <form id="customer-info">
-                <h3>Datos del cliente:</h3>
-                <label for="name">Nombre completo:</label>
-                <input type="text" id="name" required>
-                <label for="rut">RUT:</label>
-                <input type="text" id="rut" required>
-                <label for="phone">Teléfono:</label>
-                <input type="tel" id="phone" required>
-                <label for="email">Correo electrónico:</label>
-                <input type="email" id="email" required>
-                <label for="address">Dirección:</label>
-                <input type="text" id="address" required>
-                <button type="submit">Realizar pedido</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>PaolaPizza &copy; 2024 - ¡Las mejores pizzas a tu gusto!</p>
-    </footer>
-    <script src="app.js"></script>
+    <section class="choose-toppings hidden">
+      <h2>Elige hasta 3 ingredientes</h2>
+      <div class="toppings-list">
+        <!-- Aquí se generarán los ingredientes dinámicamente desde app.js -->
+      </div>
+      <button onclick="proceedToCart()">Agregar al carrito</button>
+    </section>
+
+    <section class="cart hidden">
+      <h2>Carrito de compras</h2>
+      <div id="cart-details"></div>
+      <form id="customer-info">
+        <label for="name">Nombre completo:</label>
+        <input type="text" id="name" required>
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" required>
+        <label for="phone">Teléfono:</label>
+        <input type="tel" id="phone" required>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" required>
+        <label for="address">Dirección:</label>
+        <input type="text" id="address" required>
+        <button type="submit">Realizar Pedido</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>PaolaPizza &copy; 2024</p>
+  </footer>
 </body>
 </html>
