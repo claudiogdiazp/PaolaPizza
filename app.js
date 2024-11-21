@@ -1,100 +1,83 @@
-// Lista de ingredientes y sus precios
-const ingredients = [
-    { name: 'Champiñón', price: 500 },
-    { name: 'Carne', price: 2500 },
-    { name: 'Maíz', price: 400 },
-    { name: 'Pepperoni', price: 800 },
-    { name: 'Queso Extra', price: 1000 },
-    { name: 'Aceitunas', price: 600 },
-    { name: 'Tocino', price: 1500 },
-    { name: 'Tomate', price: 700 },
-    { name: 'Cebolla', price: 300 },
-    { name: 'Pimiento', price: 400 },
-    { name: 'Pollo', price: 1800 },
-    { name: 'Piña', price: 500 },
-    { name: 'Jalapeño', price: 600 },
-    { name: 'Orégano', price: 200 },
-    { name: 'Chorizo', price: 1700 },
-    { name: 'Salami', price: 900 },
-    { name: 'Anchoas', price: 2000 },
-    { name: 'Espinaca', price: 500 },
-    { name: 'Albahaca', price: 400 },
-    { name: 'Queso Azul', price: 3000 },
-];
+document.addEventListener("DOMContentLoaded", () => {
+    const sizeSelect = document.getElementById("size");
+    const ingredientsList = document.getElementById("ingredients-list");
+    const cart = document.getElementById("cart");
+    const addToCartButton = document.getElementById("add-to-cart");
+    const checkoutButton = document.getElementById("checkout");
 
-const ingredientsList = document.getElementById('ingredients-list');
-const cartItems = document.getElementById('cart-items');
-const cartSection = document.getElementById('cart');
-const checkoutForm = document.getElementById('checkout-form');
+    const ingredients = [
+        { name: "Champiñón", price: 500 },
+        { name: "Carne", price: 2500 },
+        { name: "Maíz", price: 400 },
+        { name: "Pepperoni", price: 1000 },
+        { name: "Pollo", price: 1500 },
+        { name: "Aceitunas", price: 800 },
+        { name: "Queso extra", price: 1200 },
+        { name: "Piña", price: 700 },
+        { name: "Tocino", price: 2000 },
+        { name: "Salchicha", price: 1300 },
+        { name: "Jalapeños", price: 600 },
+        { name: "Cebolla", price: 400 },
+        { name: "Pimiento", price: 500 },
+        { name: "Atún", price: 1800 },
+        { name: "Tomate", price: 500 },
+        { name: "Albahaca", price: 600 },
+        { name: "Anchoas", price: 2000 },
+        { name: "Chorizo", price: 1500 },
+        { name: "Ajo", price: 300 },
+        { name: "Espinaca", price: 500 }
+    ];
 
-let selectedIngredients = [];
-let cart = [];
-
-// Crear lista de ingredientes
-ingredients.forEach((ingredient, index) => {
-    const div = document.createElement('div');
-    div.innerHTML = `
-        <input type="checkbox" id="ingredient-${index}" value="${ingredient.name}" data-price="${ingredient.price}">
-        <label for="ingredient-${index}">${ingredient.name} - $${ingredient.price}</label>
-    `;
-    ingredientsList.appendChild(div);
-});
-
-// Agregar pizza al carrito
-document.getElementById('add-to-cart').addEventListener('click', () => {
-    const size = document.getElementById('pizza-size').value;
-    const selectedCheckboxes = Array.from(
-        document.querySelectorAll('#ingredients-list input[type="checkbox"]:checked')
-    );
-
-    if (selectedCheckboxes.length > 3) {
-        alert('Por favor, selecciona máximo 3 ingredientes.');
-        return;
-    }
-
-    selectedIngredients = selectedCheckboxes.map((checkbox) => ({
-        name: checkbox.value,
-        price: parseInt(checkbox.dataset.price),
-    }));
-
-    const basePrice = size === 'small' ? 10000 : size === 'medium' ? 12000 : 14000;
-    const totalPrice = basePrice + selectedIngredients.reduce((sum, ing) => sum + ing.price, 0);
-
-    cart.push({ size, ingredients: selectedIngredients, totalPrice });
-    updateCart();
-});
-
-function updateCart() {
-    cartItems.innerHTML = '';
-    cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.textContent = `Pizza ${item.size} con ${item.ingredients
-            .map((ing) => ing.name)
-            .join(', ')} - Total: $${item.totalPrice}`;
-        cartItems.appendChild(li);
+    // Render ingredients list
+    ingredients.forEach((ingredient, index) => {
+        const ingredientDiv = document.createElement("div");
+        ingredientDiv.innerHTML = `
+            <input type="checkbox" id="ingredient-${index}" value="${ingredient.price}">
+            <label for="ingredient-${index}">${ingredient.name} - $${ingredient.price}</label>
+        `;
+        ingredientsList.appendChild(ingredientDiv);
     });
-    cartSection.style.display = 'block';
-}
 
-// Ir a pago
-document.getElementById('checkout').addEventListener('click', () => {
-    checkoutForm.style.display = 'block';
-    cartSection.style.display = 'none';
-});
+    // Add to cart logic
+    addToCartButton.addEventListener("click", () => {
+        const selectedSize = sizeSelect.value;
+        const selectedIngredients = Array.from(
+            ingredientsList.querySelectorAll("input:checked")
+        );
 
-// Confirmar compra
-document.getElementById('confirm-purchase').addEventListener('click', () => {
-    const fullName = document.getElementById('full-name').value;
-    const rut = document.getElementById('rut').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
+        if (selectedIngredients.length > 3) {
+            alert("Solo puedes seleccionar hasta 3 ingredientes.");
+            return;
+        }
 
-    if (!fullName || !rut || !phone || !email || !address) {
-        alert('Por favor, completa todos los campos.');
-        return;
-    }
+        let total = parseInt(selectedSize);
+        const selectedItems = selectedIngredients.map(input => {
+            const ingredient = ingredients[parseInt(input.id.split("-")[1])];
+            total += ingredient.price;
+            return ingredient.name;
+        });
 
-    alert(`¡Compra confirmada!\nNombre: ${fullName}\nRUT: ${rut}\nCelular: ${phone}\nEmail: ${email}\nDirección: ${address}`);
-    location.reload();
+        cart.innerHTML = `
+            <p>Tamaño: $${selectedSize}</p>
+            <p>Ingredientes: ${selectedItems.join(", ")}</p>
+            <p>Total: $${total}</p>
+        `;
+    });
+
+    // Checkout logic
+    checkoutButton.addEventListener("click", () => {
+        const name = prompt("Ingresa tu nombre completo:");
+        const rut = prompt("Ingresa tu RUT:");
+        const phone = prompt("Ingresa tu número de celular:");
+        const email = prompt("Ingresa tu email:");
+        const address = prompt("Ingresa tu dirección:");
+
+        if (!name || !rut || !phone || !email || !address) {
+            alert("Todos los campos son obligatorios.");
+            return;
+        }
+
+        alert(`Gracias por tu pedido, ${name}. 
+Tu pizza estará lista en 30 minutos. La enviaremos a ${address}.`);
+    });
 });

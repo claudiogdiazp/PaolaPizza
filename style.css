@@ -23,3 +23,44 @@ h1, h2 {
 
 #ingredients-list {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+#ingredients-list div {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+#ingredients-list input {
+    margin-right: 8px;
+}
+
+button {
+    background-color: #8DB4E2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #6a9fd1;
+}
+
+input, select {
+    display: block;
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#cart {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
