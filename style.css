@@ -21,27 +21,5 @@ h1, h2 {
     margin-bottom: 20px;
 }
 
-#ingredients-list div {
-    margin-bottom: 10px;
-}
-
-button {
-    background-color: #8DB4E2;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #6a9fd1;
-}
-
-input, select {
-    display: block;
-    margin-bottom: 15px;
-    padding: 8px;
-    width: 100%;
-    box-sizing: border-box;
-}
+#ingredients-list {
+    display: grid;
