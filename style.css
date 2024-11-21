@@ -1,52 +1,47 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
 }
 
-.container {
-    width: 50%;
-    margin: 50px auto;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
+header {
+    background-color: #8DB4E2;
+    color: white;
     text-align: center;
+    padding: 10px 0;
 }
 
-.size-selection, .ingredients {
+main {
+    padding: 20px;
+}
+
+h1, h2 {
     margin-bottom: 20px;
 }
 
+#ingredients-list div {
+    margin-bottom: 10px;
+}
+
 button {
-    padding: 10px 15px;
-    background-color: #4CAF50;
+    background-color: #8DB4E2;
     color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 15px;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #6a9fd1;
 }
 
-#cart {
-    margin-top: 30px;
-}
-
-#checkout-form {
-    margin-top: 30px;
-    background-color: #e7e7e7;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-#checkout-form input, #checkout-form select {
-    padding: 5px;
-    margin-bottom: 10px;
+input, select {
+    display: block;
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
