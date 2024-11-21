@@ -1,10 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const sizeSelect = document.getElementById("size");
+    const pizzaOptions = document.querySelectorAll(".pizza-option");
+    const chosenPizzaDiv = document.getElementById("chosen-pizza");
     const ingredientsList = document.getElementById("ingredients-list");
     const cart = document.getElementById("cart");
     const addToCartButton = document.getElementById("add-to-cart");
     const checkoutButton = document.getElementById("checkout");
 
+    let selectedPizza = null;
+
+    // Ingredientes
     const ingredients = [
         { name: "Champiñón", price: 500 },
         { name: "Carne", price: 2500 },
@@ -14,18 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Aceitunas", price: 800 },
         { name: "Queso extra", price: 1200 },
         { name: "Piña", price: 700 },
-        { name: "Tocino", price: 2000 },
-        { name: "Salchicha", price: 1300 },
-        { name: "Jalapeños", price: 600 },
-        { name: "Cebolla", price: 400 },
-        { name: "Pimiento", price: 500 },
-        { name: "Atún", price: 1800 },
-        { name: "Tomate", price: 500 },
-        { name: "Albahaca", price: 600 },
-        { name: "Anchoas", price: 2000 },
-        { name: "Chorizo", price: 1500 },
-        { name: "Ajo", price: 300 },
-        { name: "Espinaca", price: 500 }
+        { name: "Tocino", price: 2000 }
     ];
 
     // Render ingredients list
@@ -38,9 +31,30 @@ document.addEventListener("DOMContentLoaded", () => {
         ingredientsList.appendChild(ingredientDiv);
     });
 
+    // Handle pizza selection
+    pizzaOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            const price = option.dataset.price;
+            const size = option.dataset.size;
+            const imgSrc = option.querySelector("img").src;
+
+            selectedPizza = { price, size };
+
+            chosenPizzaDiv.innerHTML = `
+                <img src="${imgSrc}" alt="${size} pizza">
+                <h3>${size} - $${price}</h3>
+            `;
+            chosenPizzaDiv.style.display = "block";
+        });
+    });
+
     // Add to cart logic
     addToCartButton.addEventListener("click", () => {
-        const selectedSize = sizeSelect.value;
+        if (!selectedPizza) {
+            alert("Por favor selecciona un tamaño de pizza.");
+            return;
+        }
+
         const selectedIngredients = Array.from(
             ingredientsList.querySelectorAll("input:checked")
         );
@@ -50,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        let total = parseInt(selectedSize);
+        let total = parseInt(selectedPizza.price);
         const selectedItems = selectedIngredients.map(input => {
             const ingredient = ingredients[parseInt(input.id.split("-")[1])];
             total += ingredient.price;
@@ -58,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         cart.innerHTML = `
-            <p>Tamaño: $${selectedSize}</p>
+            <p>Tamaño: ${selectedPizza.size} - $${selectedPizza.price}</p>
             <p>Ingredientes: ${selectedItems.join(", ")}</p>
             <p>Total: $${total}</p>
         `;
@@ -67,12 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Checkout logic
     checkoutButton.addEventListener("click", () => {
         const name = prompt("Ingresa tu nombre completo:");
-        const rut = prompt("Ingresa tu RUT:");
-        const phone = prompt("Ingresa tu número de celular:");
-        const email = prompt("Ingresa tu email:");
         const address = prompt("Ingresa tu dirección:");
 
-        if (!name || !rut || !phone || !email || !address) {
+        if (!name || !address) {
             alert("Todos los campos son obligatorios.");
             return;
         }
